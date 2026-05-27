@@ -131,7 +131,7 @@ namespace RimTalk_ExtendedVariables
             if (pawn == null || !pawn.Spawned || pawn.Map == null)
                 return "";
 
-            int radius = 12;
+            int radius = 4;
             var cells = GenRadial.RadialCellsAround(pawn.Position, radius, true).ToList();
             
             Dictionary<string, int> buildings = new Dictionary<string, int>();
@@ -144,8 +144,13 @@ namespace RimTalk_ExtendedVariables
 
             HashSet<int> seenThings = new HashSet<int>();
 
+            Room pawnRoom = pawn.GetRoom();
+            bool isOutdoors = pawnRoom == null || pawnRoom.TouchesMapEdge;
+
             foreach (var cell in cells)
             {
+                if (!cell.InBounds(pawn.Map)) continue;
+                if (!isOutdoors && cell.GetRoom(pawn.Map) != pawnRoom) continue;
                 if (!GenSight.LineOfSight(pawn.Position, cell, pawn.Map, true)) continue;
 
                 var thingList = cell.GetThingList(pawn.Map);

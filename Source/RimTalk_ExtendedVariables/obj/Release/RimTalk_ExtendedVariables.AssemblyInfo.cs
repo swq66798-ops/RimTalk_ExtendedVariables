@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RimTalk_ExtendedVariables")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f5ae58a5df8e04528c39456b82a5e356105bb8d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1428cf9da891da1ce42a19d7d93eae4ba2c02ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("RimTalk_ExtendedVariables")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RimTalk_ExtendedVariables")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
