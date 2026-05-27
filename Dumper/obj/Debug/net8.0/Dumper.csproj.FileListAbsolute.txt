@@ -21,3 +21,4 @@ D:\dev\RimTalk_ExtendedVariables\Dumper\obj\Debug\net8.0\Dumper.csproj.Up2Date
 d:\dev\RimTalk_ExtendedVariables\Dumper\bin\Debug\net8.0\ICSharpCode.Decompiler.dll
 d:\dev\RimTalk_ExtendedVariables\Dumper\bin\Debug\net8.0\System.Collections.Immutable.dll
 d:\dev\RimTalk_ExtendedVariables\Dumper\bin\Debug\net8.0\System.Reflection.Metadata.dll
+d:\dev\RimTalk_ExtendedVariables\Dumper\obj\Debug\net8.0\Dumper.sourcelink.json

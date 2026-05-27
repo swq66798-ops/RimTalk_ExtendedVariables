@@ -35,6 +35,15 @@ namespace RimTalk_ExtendedVariables
                     0
                 );
                 Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_surroundings' variable.");
+
+                RimTalkPromptAPI.RegisterPawnVariable(
+                    "cj.rimtalk.extendedvariables",
+                    "extended_captive_status",
+                    GetExtendedCaptiveStatus,
+                    "Detailed captive status including resistance, will, and unwavering loyalty.",
+                    0
+                );
+                Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_captive_status' variable.");
             }
             catch (Exception ex)
             {
@@ -213,6 +222,32 @@ namespace RimTalk_ExtendedVariables
             if (dict.Count == 0) return;
             var items = dict.OrderByDescending(kv => kv.Value).Select(kv => kv.Value > 1 ? $"{kv.Key} ×{kv.Value}" : kv.Key);
             groups.Add($"{label}: {string.Join(", ", items)}");
+        }
+
+        private static string GetExtendedCaptiveStatus(Pawn pawn)
+        {
+            if (pawn == null || pawn.guest == null || !pawn.IsPrisoner)
+                return "";
+
+            StringBuilder sb = new StringBuilder();
+            
+            sb.AppendLine($"Resistance: {pawn.guest.Resistance}");
+            
+            if (ModsConfig.IdeologyActive)
+            {
+                sb.AppendLine($"Will: {pawn.guest.will}");
+            }
+            
+            if (pawn.guest.Recruitable == false)
+            {
+                sb.AppendLine("Unwaveringly Loyal: Yes (Cannot be recruited)");
+            }
+            else
+            {
+                sb.AppendLine("Unwaveringly Loyal: No");
+            }
+
+            return sb.ToString().TrimEnd();
         }
     }
 }
