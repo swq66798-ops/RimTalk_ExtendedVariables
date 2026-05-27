@@ -68,28 +68,20 @@ namespace RimTalk_ExtendedVariables
             StringBuilder sb = new StringBuilder();
             
             // Use RimWorld's VisibleHediffs to properly hide replaced parts
-            var hediffs = pawn.health.hediffSet.hediffs;
+            IEnumerable<Hediff> hediffs;
+            try
+            {
+                var method = AccessTools.Method(typeof(HealthCardUtility), "VisibleHediffs");
+                hediffs = (IEnumerable<Hediff>)method.Invoke(null, new object[] { pawn, false });
+            }
+            catch
+            {
+                hediffs = pawn.health.hediffSet.hediffs.Where(h => h.Visible);
+            }
             
             bool hasHediffs = false;
             foreach (var hediff in hediffs)
             {
-                if (!hediff.Visible) continue;
-                
-                // Skip missing parts that are replaced by artificial parts (like bionic legs)
-                if (hediff is Hediff_MissingPart missingPart)
-                {
-                    bool isReplaced = false;
-                    foreach (var otherHediff in hediffs)
-                    {
-                        if (otherHediff != hediff && otherHediff.Part == missingPart.Part && otherHediff is Hediff_AddedPart)
-                        {
-                            isReplaced = true;
-                            break;
-                        }
-                    }
-                    if (isReplaced) continue;
-                }
-                
                 hasHediffs = true;
                 string part = hediff.Part != null ? $"({hediff.Part.Label})" : "";
                 string severity = $"Severity:{(int)(hediff.Severity * 100)}%";
