@@ -1,0 +1,18 @@
+ICSharpCode.Decompiler.Metadata.ResolutionException: Failed to resolve assembly: 'Assembly-CSharp, Version=1.5.9214.34252, Culture=neutral, PublicKeyToken=null'
+Resolve result: <not found>
+   at ICSharpCode.Decompiler.Metadata.UniversalAssemblyResolver.ResolveInternal(IAssemblyReference name) in /_/ICSharpCode.Decompiler/Metadata/UniversalAssemblyResolver.cs:line 468
+   at ICSharpCode.Decompiler.Metadata.UniversalAssemblyResolver.FindAssemblyFile(IAssemblyReference name) in /_/ICSharpCode.Decompiler/Metadata/UniversalAssemblyResolver.cs:line 298
+   at ICSharpCode.Decompiler.Metadata.UniversalAssemblyResolver.Resolve(IAssemblyReference name) in /_/ICSharpCode.Decompiler/Metadata/UniversalAssemblyResolver.cs:line 215
+   at ICSharpCode.Decompiler.Metadata.UniversalAssemblyResolver.<>c__DisplayClass22_0.<ResolveAsync>b__0() in /_/ICSharpCode.Decompiler/Metadata/UniversalAssemblyResolver.cs:line 257
+   at System.Threading.Tasks.Task`1.InnerInvoke()
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread threadPoolThread, ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at ICSharpCode.Decompiler.TypeSystem.DecompilerTypeSystem.InitializeAsync(MetadataFile mainModule, IAssemblyResolver assemblyResolver) in /_/ICSharpCode.Decompiler/TypeSystem/DecompilerTypeSystem.cs:line 315
+   at ICSharpCode.Decompiler.TypeSystem.DecompilerTypeSystem..ctor(MetadataFile mainModule, IAssemblyResolver assemblyResolver, TypeSystemOptions typeSystemOptions) in /_/ICSharpCode.Decompiler/TypeSystem/DecompilerTypeSystem.cs:line 267
+   at ICSharpCode.Decompiler.TypeSystem.DecompilerTypeSystem..ctor(MetadataFile mainModule, IAssemblyResolver assemblyResolver, DecompilerSettings settings) in /_/ICSharpCode.Decompiler/TypeSystem/DecompilerTypeSystem.cs:line 256
+   at ICSharpCode.Decompiler.CSharp.CSharpDecompiler.CreateTypeSystemFromFile(String fileName, DecompilerSettings settings) in /_/ICSharpCode.Decompiler/CSharp/CSharpDecompiler.cs:line 652
+   at ICSharpCode.Decompiler.CSharp.CSharpDecompiler..ctor(String fileName, DecompilerSettings settings) in /_/ICSharpCode.Decompiler/CSharp/CSharpDecompiler.cs:line 238
+   at Program.Main() in d:\dev\RimTalk_ExtendedVariables\Dumper\Program.cs:line 13

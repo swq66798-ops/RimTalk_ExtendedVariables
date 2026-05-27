@@ -1,0 +1,62 @@
+IL_0000: nop
+IL_0001: ldarg.0
+IL_0002: call System.Boolean System.String::IsNullOrEmpty(System.String)
+IL_0007: stloc.0
+IL_0008: ldloc.0
+IL_0009: brfalse.s IL_0012
+IL_000b: ldarg.0
+IL_000c: stloc.1
+IL_000d: br IL_0094
+IL_0012: ldarg.0
+IL_0013: callvirt System.String System.String::ToLowerInvariant()
+IL_0018: stloc.3
+IL_0019: ldc.i4.1
+IL_001a: brtrue.s IL_001d
+IL_001c: nop
+IL_001d: ldloc.3
+IL_001e: ldstr "skilltracker"
+IL_0023: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0028: brtrue.s IL_0060
+IL_002a: ldloc.3
+IL_002b: ldstr "healthtracker"
+IL_0030: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0035: brtrue.s IL_0068
+IL_0037: ldloc.3
+IL_0038: ldstr "equipmenttracker"
+IL_003d: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_0042: brtrue.s IL_0070
+IL_0044: ldloc.3
+IL_0045: ldstr "genetracker"
+IL_004a: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_004f: brtrue.s IL_0078
+IL_0051: ldloc.3
+IL_0052: ldstr "surroundingstracker"
+IL_0057: call System.Boolean System.String::op_Equality(System.String,System.String)
+IL_005c: brtrue.s IL_0080
+IL_005e: br.s IL_0088
+IL_0060: ldstr "skills"
+IL_0065: stloc.2
+IL_0066: br.s IL_008c
+IL_0068: ldstr "health"
+IL_006d: stloc.2
+IL_006e: br.s IL_008c
+IL_0070: ldstr "equipment"
+IL_0075: stloc.2
+IL_0076: br.s IL_008c
+IL_0078: ldstr "genes"
+IL_007d: stloc.2
+IL_007e: br.s IL_008c
+IL_0080: ldstr "surroundings"
+IL_0085: stloc.2
+IL_0086: br.s IL_008c
+IL_0088: ldarg.0
+IL_0089: stloc.2
+IL_008a: br.s IL_008c
+IL_008c: ldc.i4.1
+IL_008d: brtrue.s IL_0090
+IL_008f: nop
+IL_0090: ldloc.2
+IL_0091: stloc.1
+IL_0092: br.s IL_0094
+IL_0094: ldloc.1
+IL_0095: ret

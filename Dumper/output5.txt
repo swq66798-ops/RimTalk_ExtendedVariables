@@ -1,0 +1,73 @@
+--- AddAgg ---
+IL_0000: nop
+IL_0001: ldarg.1
+IL_0002: ldfld Verse.ThingDef Verse.Thing::def
+IL_0007: stloc.0
+IL_0008: ldloc.0
+IL_0009: callvirt Verse.TaggedString Verse.Def::get_LabelCap()
+IL_000e: stloc.1
+IL_000f: ldstr "{0}|{1}"
+IL_0014: ldarg.2
+IL_0015: box RimTalk.Util.NearbyKind
+IL_001a: ldloc.0
+IL_001b: ldfld System.String Verse.Def::defName
+IL_0020: call System.String System.String::Format(System.String,System.Object,System.Object)
+IL_0025: stloc.2
+IL_0026: ldarg.0
+IL_0027: ldloc.2
+IL_0028: ldloca.s V_3
+IL_002a: callvirt System.Boolean System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>::TryGetValue(!0,!1&)
+IL_002f: ldc.i4.0
+IL_0030: ceq
+IL_0032: stloc.s V_4
+IL_0034: ldloc.s V_4
+IL_0036: brfalse.s IL_0072
+IL_0038: nop
+IL_0039: ldloca.s V_5
+IL_003b: initobj RimTalk.Util.NearbyAgg
+IL_0041: ldloca.s V_5
+IL_0043: ldarg.2
+IL_0044: stfld RimTalk.Util.NearbyKind RimTalk.Util.NearbyAgg::Kind
+IL_0049: ldloca.s V_5
+IL_004b: ldloc.2
+IL_004c: stfld System.String RimTalk.Util.NearbyAgg::Key
+IL_0051: ldloca.s V_5
+IL_0053: ldloc.1
+IL_0054: call System.String Verse.TaggedString::op_Implicit(Verse.TaggedString)
+IL_0059: stfld System.String RimTalk.Util.NearbyAgg::Label
+IL_005e: ldloca.s V_5
+IL_0060: ldc.i4.0
+IL_0061: stfld System.Int32 RimTalk.Util.NearbyAgg::Count
+IL_0066: ldloca.s V_5
+IL_0068: ldc.i4.0
+IL_0069: stfld System.Int32 RimTalk.Util.NearbyAgg::StackSum
+IL_006e: ldloc.s V_5
+IL_0070: stloc.3
+IL_0071: nop
+IL_0072: ldloca.s V_3
+IL_0074: ldflda System.Int32 RimTalk.Util.NearbyAgg::Count
+IL_0079: dup
+IL_007a: ldind.i4
+IL_007b: ldc.i4.1
+IL_007c: add
+IL_007d: stind.i4
+IL_007e: ldarg.2
+IL_007f: ldc.i4.1
+IL_0080: ceq
+IL_0082: stloc.s V_6
+IL_0084: ldloc.s V_6
+IL_0086: brfalse.s IL_0099
+IL_0088: ldloca.s V_3
+IL_008a: ldflda System.Int32 RimTalk.Util.NearbyAgg::StackSum
+IL_008f: dup
+IL_0090: ldind.i4
+IL_0091: ldarg.1
+IL_0092: ldfld System.Int32 Verse.Thing::stackCount
+IL_0097: add
+IL_0098: stind.i4
+IL_0099: ldarg.0
+IL_009a: ldloc.2
+IL_009b: ldloc.3
+IL_009c: callvirt System.Void System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>::set_Item(!0,!1)
+IL_00a1: nop
+IL_00a2: ret

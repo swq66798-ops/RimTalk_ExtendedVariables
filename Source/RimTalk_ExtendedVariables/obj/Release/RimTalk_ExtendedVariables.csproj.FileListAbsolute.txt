@@ -1,0 +1,10 @@
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.csproj.AssemblyReference.cache
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.GeneratedMSBuildEditorConfig.editorconfig
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.AssemblyInfoInputs.cache
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.AssemblyInfo.cs
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.csproj.CoreCompileInputs.cache
+D:\dev\RimTalk_ExtendedVariables\1.5\Assemblies\RimTalk_ExtendedVariables.deps.json
+D:\dev\RimTalk_ExtendedVariables\1.5\Assemblies\RimTalk_ExtendedVariables.dll
+D:\dev\RimTalk_ExtendedVariables\1.5\Assemblies\RimTalk_ExtendedVariables.pdb
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.dll
+D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.pdb

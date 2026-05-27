@@ -1,0 +1,16 @@
+--- CollectNearbyContextText ---
+IL_0000: nop
+IL_0001: ldarg.0
+IL_0002: ldarg.1
+IL_0003: ldarg.2
+IL_0004: ldarg.3
+IL_0005: ldarg.s maxThingsTotal
+IL_0007: ldarg.s maxItemThings
+IL_0009: call System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg> RimTalk.Util.ContextHelper::CollectNearbyContext(Verse.Pawn,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+IL_000e: stloc.0
+IL_000f: ldloc.0
+IL_0010: call System.String RimTalk.Util.ContextHelper::FormatNearbyContext(System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg>)
+IL_0015: stloc.1
+IL_0016: br.s IL_0018
+IL_0018: ldloc.1
+IL_0019: ret

@@ -1,0 +1,428 @@
+--- CollectNearbyContext ---
+IL_0000: newobj System.Void RimTalk.Util.ContextHelper/<>c__DisplayClass8_0::.ctor()
+IL_0005: stloc.0
+IL_0006: ldloc.0
+IL_0007: ldarg.2
+IL_0008: stfld System.Int32 RimTalk.Util.ContextHelper/<>c__DisplayClass8_0::maxPerKind
+IL_000d: nop
+IL_000e: ldarg.0
+IL_000f: brtrue.s IL_0014
+IL_0011: ldnull
+IL_0012: br.s IL_001a
+IL_0014: ldarg.0
+IL_0015: call Verse.Map Verse.Thing::get_Map()
+IL_001a: brfalse.s IL_002e
+IL_001c: ldarg.0
+IL_001d: callvirt Verse.IntVec3 Verse.Thing::get_Position()
+IL_0022: ldsfld Verse.IntVec3 Verse.IntVec3::Invalid
+IL_0027: call System.Boolean Verse.IntVec3::op_Equality(Verse.IntVec3,Verse.IntVec3)
+IL_002c: br.s IL_002f
+IL_002e: ldc.i4.1
+IL_002f: stloc.s V_8
+IL_0031: ldloc.s V_8
+IL_0033: brfalse.s IL_0041
+IL_0035: newobj System.Void System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg>::.ctor()
+IL_003a: stloc.s V_9
+IL_003c: br IL_0364
+IL_0041: ldarg.0
+IL_0042: callvirt Verse.Map Verse.Thing::get_Map()
+IL_0047: stloc.1
+IL_0048: ldarg.0
+IL_0049: ldc.i4.s 15
+IL_004b: call Verse.Room Verse.RegionAndRoomQuery::GetRoom(Verse.Thing,Verse.RegionType)
+IL_0050: stloc.s V_10
+IL_0052: ldloc.s V_10
+IL_0054: brfalse.s IL_0062
+IL_0056: ldloc.s V_10
+IL_0058: callvirt System.Boolean Verse.Room::get_PsychologicallyOutdoors()
+IL_005d: ldc.i4.0
+IL_005e: ceq
+IL_0060: br.s IL_0063
+IL_0062: ldc.i4.0
+IL_0063: stloc.2
+IL_0064: ldarg.0
+IL_0065: ldarg.1
+IL_0066: ldloc.2
+IL_0067: call System.Collections.Generic.List`1<Verse.IntVec3> RimTalk.Util.ContextHelper::GetNearbyCellsRadial(Verse.Pawn,System.Int32,System.Boolean)
+IL_006c: stloc.3
+IL_006d: ldloc.3
+IL_006e: callvirt System.Int32 System.Collections.Generic.List`1<Verse.IntVec3>::get_Count()
+IL_0073: ldarg.3
+IL_0074: cgt
+IL_0076: stloc.s V_11
+IL_0078: ldloc.s V_11
+IL_007a: brfalse.s IL_0089
+IL_007c: ldloc.3
+IL_007d: ldarg.3
+IL_007e: call System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Take<Verse.IntVec3>(System.Collections.Generic.IEnumerable`1<!!0>,System.Int32)
+IL_0083: call System.Collections.Generic.List`1<!!0> System.Linq.Enumerable::ToList<Verse.IntVec3>(System.Collections.Generic.IEnumerable`1<!!0>)
+IL_0088: stloc.3
+IL_0089: newobj System.Void System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>::.ctor()
+IL_008e: stloc.s V_4
+IL_0090: newobj System.Void System.Collections.Generic.HashSet`1<System.Int32>::.ctor()
+IL_0095: stloc.s V_5
+IL_0097: ldc.i4.0
+IL_0098: stloc.s V_6
+IL_009a: ldc.i4.0
+IL_009b: stloc.s V_7
+IL_009d: nop
+IL_009e: ldloc.3
+IL_009f: callvirt System.Collections.Generic.List`1/Enumerator<!0> System.Collections.Generic.List`1<Verse.IntVec3>::GetEnumerator()
+IL_00a4: stloc.s V_12
+IL_00a6: br IL_0301
+IL_00ab: ldloca.s V_12
+IL_00ad: call !0 System.Collections.Generic.List`1/Enumerator<Verse.IntVec3>::get_Current()
+IL_00b2: stloc.s V_13
+IL_00b4: nop
+IL_00b5: ldloc.s V_13
+IL_00b7: ldloc.1
+IL_00b8: call System.Collections.Generic.List`1<Verse.Thing> Verse.GridsUtility::GetThingList(Verse.IntVec3,Verse.Map)
+IL_00bd: stloc.s V_14
+IL_00bf: ldloc.s V_14
+IL_00c1: brfalse.s IL_00cf
+IL_00c3: ldloc.s V_14
+IL_00c5: callvirt System.Int32 System.Collections.Generic.List`1<Verse.Thing>::get_Count()
+IL_00ca: ldc.i4.0
+IL_00cb: ceq
+IL_00cd: br.s IL_00d0
+IL_00cf: ldc.i4.1
+IL_00d0: stloc.s V_15
+IL_00d2: ldloc.s V_15
+IL_00d4: brfalse.s IL_00db
+IL_00d6: br IL_0301
+IL_00db: ldc.i4.0
+IL_00dc: stloc.s V_16
+IL_00de: br IL_02ec
+IL_00e3: nop
+IL_00e4: ldloc.s V_6
+IL_00e6: ldarg.s maxThingsTotal
+IL_00e8: clt
+IL_00ea: ldc.i4.0
+IL_00eb: ceq
+IL_00ed: stloc.s V_20
+IL_00ef: ldloc.s V_20
+IL_00f1: brfalse.s IL_00f8
+IL_00f3: leave IL_031e
+IL_00f8: ldloc.s V_14
+IL_00fa: ldloc.s V_16
+IL_00fc: callvirt !0 System.Collections.Generic.List`1<Verse.Thing>::get_Item(System.Int32)
+IL_0101: stloc.s V_17
+IL_0103: ldloc.s V_17
+IL_0105: brtrue.s IL_010a
+IL_0107: ldnull
+IL_0108: br.s IL_0111
+IL_010a: ldloc.s V_17
+IL_010c: ldfld Verse.ThingDef Verse.Thing::def
+IL_0111: ldnull
+IL_0112: ceq
+IL_0114: stloc.s V_21
+IL_0116: ldloc.s V_21
+IL_0118: brfalse.s IL_011f
+IL_011a: br IL_02e6
+IL_011f: ldloc.s V_17
+IL_0121: call System.Boolean Verse.ThingUtility::DestroyedOrNull(Verse.Thing)
+IL_0126: stloc.s V_22
+IL_0128: ldloc.s V_22
+IL_012a: brfalse.s IL_0131
+IL_012c: br IL_02e6
+IL_0131: call RimWorld.HiddenItemsManager Verse.Find::get_HiddenItemsManager()
+IL_0136: brfalse.s IL_014b
+IL_0138: call RimWorld.HiddenItemsManager Verse.Find::get_HiddenItemsManager()
+IL_013d: ldloc.s V_17
+IL_013f: ldfld Verse.ThingDef Verse.Thing::def
+IL_0144: callvirt System.Boolean RimWorld.HiddenItemsManager::Hidden(Verse.ThingDef)
+IL_0149: br.s IL_014c
+IL_014b: ldc.i4.0
+IL_014c: stloc.s V_23
+IL_014e: ldloc.s V_23
+IL_0150: brfalse.s IL_0157
+IL_0152: br IL_02e6
+IL_0157: ldloc.s V_17
+IL_0159: ldfld Verse.ThingDef Verse.Thing::def
+IL_015e: ldfld Verse.ThingCategory Verse.ThingDef::category
+IL_0163: ldc.i4.2
+IL_0164: ceq
+IL_0166: stloc.s V_24
+IL_0168: ldloc.s V_24
+IL_016a: brfalse.s IL_01cf
+IL_016c: nop
+IL_016d: ldloc.s V_17
+IL_016f: callvirt Verse.IntVec3 Verse.Thing::get_Position()
+IL_0174: ldloc.1
+IL_0175: call RimWorld.SlotGroup RimWorld.StoreUtility::GetSlotGroup(Verse.IntVec3,Verse.Map)
+IL_017a: ldnull
+IL_017b: cgt.un
+IL_017d: stloc.s V_25
+IL_017f: ldloc.s V_25
+IL_0181: brfalse.s IL_0188
+IL_0183: br IL_02e6
+IL_0188: ldloc.s V_7
+IL_018a: ldc.i4.1
+IL_018b: add
+IL_018c: stloc.s V_7
+IL_018e: ldloc.s V_7
+IL_0190: ldarg.s maxItemThings
+IL_0192: cgt
+IL_0194: stloc.s V_26
+IL_0196: ldloc.s V_26
+IL_0198: brfalse.s IL_019f
+IL_019a: leave IL_031e
+IL_019f: ldloc.s V_17
+IL_01a1: ldfld System.Int32 Verse.Thing::stackCount
+IL_01a6: ldc.i4 1000
+IL_01ab: blt.s IL_01c2
+IL_01ad: ldloc.s V_17
+IL_01af: ldfld Verse.ThingDef Verse.Thing::def
+IL_01b4: ldfld System.Int32 Verse.ThingDef::stackLimit
+IL_01b9: ldc.i4 1000
+IL_01be: clt
+IL_01c0: br.s IL_01c3
+IL_01c2: ldc.i4.0
+IL_01c3: stloc.s V_27
+IL_01c5: ldloc.s V_27
+IL_01c7: brfalse.s IL_01ce
+IL_01c9: br IL_02e6
+IL_01ce: nop
+IL_01cf: ldloc.s V_6
+IL_01d1: ldc.i4.1
+IL_01d2: add
+IL_01d3: stloc.s V_6
+IL_01d5: ldloc.s V_17
+IL_01d7: isinst Verse.Pawn
+IL_01dc: stloc.s V_18
+IL_01de: ldloc.s V_18
+IL_01e0: ldnull
+IL_01e1: cgt.un
+IL_01e3: stloc.s V_28
+IL_01e5: ldloc.s V_28
+IL_01e7: brfalse.s IL_0242
+IL_01e9: nop
+IL_01ea: ldloc.s V_18
+IL_01ec: ldarg.0
+IL_01ed: ceq
+IL_01ef: stloc.s V_29
+IL_01f1: ldloc.s V_29
+IL_01f3: brfalse.s IL_01fa
+IL_01f5: br IL_02e6
+IL_01fa: ldloc.s V_18
+IL_01fc: callvirt System.Boolean Verse.Thing::get_Spawned()
+IL_0201: brfalse.s IL_020c
+IL_0203: ldloc.s V_18
+IL_0205: callvirt System.Boolean Verse.Pawn::get_Dead()
+IL_020a: br.s IL_020d
+IL_020c: ldc.i4.1
+IL_020d: stloc.s V_30
+IL_020f: ldloc.s V_30
+IL_0211: brfalse.s IL_0218
+IL_0213: br IL_02e6
+IL_0218: ldloc.s V_18
+IL_021a: callvirt Verse.RaceProperties Verse.Pawn::get_RaceProps()
+IL_021f: callvirt System.Boolean Verse.RaceProperties::get_Animal()
+IL_0224: ldc.i4.0
+IL_0225: ceq
+IL_0227: stloc.s V_31
+IL_0229: ldloc.s V_31
+IL_022b: brfalse.s IL_0232
+IL_022d: br IL_02e6
+IL_0232: ldloc.s V_4
+IL_0234: ldloc.s V_18
+IL_0236: ldc.i4.3
+IL_0237: call System.Void RimTalk.Util.ContextHelper::AddAgg(System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>,Verse.Thing,RimTalk.Util.NearbyKind)
+IL_023c: nop
+IL_023d: br IL_02e6
+IL_0242: ldloc.s V_17
+IL_0244: ldfld Verse.ThingDef Verse.Thing::def
+IL_0249: ldfld Verse.ThingCategory Verse.ThingDef::category
+IL_024e: stloc.s V_19
+IL_0250: ldloc.s V_19
+IL_0252: ldc.i4.3
+IL_0253: ceq
+IL_0255: stloc.s V_32
+IL_0257: ldloc.s V_32
+IL_0259: brfalse.s IL_0292
+IL_025b: nop
+IL_025c: ldloc.s V_5
+IL_025e: ldloc.s V_17
+IL_0260: ldfld System.Int32 Verse.Thing::thingIDNumber
+IL_0265: callvirt System.Boolean System.Collections.Generic.HashSet`1<System.Int32>::Add(!0)
+IL_026a: ldc.i4.0
+IL_026b: ceq
+IL_026d: stloc.s V_33
+IL_026f: ldloc.s V_33
+IL_0271: brfalse.s IL_0275
+IL_0273: br.s IL_02e6
+IL_0275: ldloc.s V_17
+IL_0277: call System.Boolean RimTalk.Util.ContextHelper::IsWall(Verse.Thing)
+IL_027c: stloc.s V_34
+IL_027e: ldloc.s V_34
+IL_0280: brfalse.s IL_0284
+IL_0282: br.s IL_02e6
+IL_0284: ldloc.s V_4
+IL_0286: ldloc.s V_17
+IL_0288: ldc.i4.0
+IL_0289: call System.Void RimTalk.Util.ContextHelper::AddAgg(System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>,Verse.Thing,RimTalk.Util.NearbyKind)
+IL_028e: nop
+IL_028f: nop
+IL_0290: br.s IL_02e5
+IL_0292: ldloc.s V_19
+IL_0294: ldc.i4.2
+IL_0295: ceq
+IL_0297: stloc.s V_35
+IL_0299: ldloc.s V_35
+IL_029b: brfalse.s IL_02ac
+IL_029d: nop
+IL_029e: ldloc.s V_4
+IL_02a0: ldloc.s V_17
+IL_02a2: ldc.i4.1
+IL_02a3: call System.Void RimTalk.Util.ContextHelper::AddAgg(System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>,Verse.Thing,RimTalk.Util.NearbyKind)
+IL_02a8: nop
+IL_02a9: nop
+IL_02aa: br.s IL_02e5
+IL_02ac: ldloc.s V_19
+IL_02ae: ldc.i4.4
+IL_02af: ceq
+IL_02b1: stloc.s V_36
+IL_02b3: ldloc.s V_36
+IL_02b5: brfalse.s IL_02c6
+IL_02b7: nop
+IL_02b8: ldloc.s V_4
+IL_02ba: ldloc.s V_17
+IL_02bc: ldc.i4.2
+IL_02bd: call System.Void RimTalk.Util.ContextHelper::AddAgg(System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>,Verse.Thing,RimTalk.Util.NearbyKind)
+IL_02c2: nop
+IL_02c3: nop
+IL_02c4: br.s IL_02e5
+IL_02c6: ldloc.s V_17
+IL_02c8: ldfld Verse.ThingDef Verse.Thing::def
+IL_02cd: callvirt System.Boolean Verse.ThingDef::get_IsFilth()
+IL_02d2: stloc.s V_37
+IL_02d4: ldloc.s V_37
+IL_02d6: brfalse.s IL_02e5
+IL_02d8: nop
+IL_02d9: ldloc.s V_4
+IL_02db: ldloc.s V_17
+IL_02dd: ldc.i4.4
+IL_02de: call System.Void RimTalk.Util.ContextHelper::AddAgg(System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>,Verse.Thing,RimTalk.Util.NearbyKind)
+IL_02e3: nop
+IL_02e4: nop
+IL_02e5: nop
+IL_02e6: ldloc.s V_16
+IL_02e8: ldc.i4.1
+IL_02e9: add
+IL_02ea: stloc.s V_16
+IL_02ec: ldloc.s V_16
+IL_02ee: ldloc.s V_14
+IL_02f0: callvirt System.Int32 System.Collections.Generic.List`1<Verse.Thing>::get_Count()
+IL_02f5: clt
+IL_02f7: stloc.s V_38
+IL_02f9: ldloc.s V_38
+IL_02fb: brtrue IL_00e3
+IL_0300: nop
+IL_0301: ldloca.s V_12
+IL_0303: call System.Boolean System.Collections.Generic.List`1/Enumerator<Verse.IntVec3>::MoveNext()
+IL_0308: brtrue IL_00ab
+IL_030d: leave.s IL_031e
+IL_030f: ldloca.s V_12
+IL_0311: constrained. System.Collections.Generic.List`1/Enumerator<Verse.IntVec3>
+IL_0317: callvirt System.Void System.IDisposable::Dispose()
+IL_031c: nop
+IL_031d: endfinally
+IL_031e: nop
+IL_031f: ldloc.s V_4
+IL_0321: callvirt System.Collections.Generic.Dictionary`2/ValueCollection<!0,!1> System.Collections.Generic.Dictionary`2<System.String,RimTalk.Util.NearbyAgg>::get_Values()
+IL_0326: ldsfld System.Func`2<RimTalk.Util.NearbyAgg,RimTalk.Util.NearbyKind> RimTalk.Util.ContextHelper/<>c::<>9__8_0
+IL_032b: dup
+IL_032c: brtrue.s IL_0345
+IL_032e: pop
+IL_032f: ldsfld RimTalk.Util.ContextHelper/<>c RimTalk.Util.ContextHelper/<>c::<>9
+IL_0334: ldftn RimTalk.Util.NearbyKind RimTalk.Util.ContextHelper/<>c::<CollectNearbyContext>b__8_0(RimTalk.Util.NearbyAgg)
+IL_033a: newobj System.Void System.Func`2<RimTalk.Util.NearbyAgg,RimTalk.Util.NearbyKind>::.ctor(System.Object,System.IntPtr)
+IL_033f: dup
+IL_0340: stsfld System.Func`2<RimTalk.Util.NearbyAgg,RimTalk.Util.NearbyKind> RimTalk.Util.ContextHelper/<>c::<>9__8_0
+IL_0345: call System.Collections.Generic.IEnumerable`1<System.Linq.IGrouping`2<!!1,!!0>> System.Linq.Enumerable::GroupBy<RimTalk.Util.NearbyAgg,RimTalk.Util.NearbyKind>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_034a: ldloc.0
+IL_034b: ldftn System.Collections.Generic.IEnumerable`1<RimTalk.Util.NearbyAgg> RimTalk.Util.ContextHelper/<>c__DisplayClass8_0::<CollectNearbyContext>b__1(System.Linq.IGrouping`2<RimTalk.Util.NearbyKind,RimTalk.Util.NearbyAgg>)
+IL_0351: newobj System.Void System.Func`2<System.Linq.IGrouping`2<RimTalk.Util.NearbyKind,RimTalk.Util.NearbyAgg>,System.Collections.Generic.IEnumerable`1<RimTalk.Util.NearbyAgg>>::.ctor(System.Object,System.IntPtr)
+IL_0356: call System.Collections.Generic.IEnumerable`1<!!1> System.Linq.Enumerable::SelectMany<System.Linq.IGrouping`2<RimTalk.Util.NearbyKind,RimTalk.Util.NearbyAgg>,RimTalk.Util.NearbyAgg>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,System.Collections.Generic.IEnumerable`1<!!1>>)
+IL_035b: call System.Collections.Generic.List`1<!!0> System.Linq.Enumerable::ToList<RimTalk.Util.NearbyAgg>(System.Collections.Generic.IEnumerable`1<!!0>)
+IL_0360: stloc.s V_9
+IL_0362: br.s IL_0364
+IL_0364: ldloc.s V_9
+IL_0366: ret
+--- FormatNearbyContext ---
+IL_0000: ldloca.s V_0
+IL_0002: ldarg.0
+IL_0003: stfld System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg> RimTalk.Util.ContextHelper/<>c__DisplayClass10_0::aggs
+IL_0008: nop
+IL_0009: ldloc.0
+IL_000a: ldfld System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg> RimTalk.Util.ContextHelper/<>c__DisplayClass10_0::aggs
+IL_000f: brfalse.s IL_0021
+IL_0011: ldloc.0
+IL_0012: ldfld System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg> RimTalk.Util.ContextHelper/<>c__DisplayClass10_0::aggs
+IL_0017: callvirt System.Int32 System.Collections.Generic.List`1<RimTalk.Util.NearbyAgg>::get_Count()
+IL_001c: ldc.i4.0
+IL_001d: ceq
+IL_001f: br.s IL_0022
+IL_0021: ldc.i4.1
+IL_0022: stloc.2
+IL_0023: ldloc.2
+IL_0024: brfalse.s IL_002d
+IL_0026: ldnull
+IL_0027: stloc.3
+IL_0028: br IL_00ca
+IL_002d: nop
+IL_002e: newobj System.Void System.Collections.Generic.List`1<System.String>::.ctor()
+IL_0033: dup
+IL_0034: ldc.i4.0
+IL_0035: ldstr "Buildings"
+IL_003a: ldloca.s V_0
+IL_003c: call System.String RimTalk.Util.ContextHelper::<FormatNearbyContext>g__FmtGroup|10_0(RimTalk.Util.NearbyKind,System.String,RimTalk.Util.ContextHelper/<>c__DisplayClass10_0&)
+IL_0041: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_0046: nop
+IL_0047: dup
+IL_0048: ldc.i4.1
+IL_0049: ldstr "Items"
+IL_004e: ldloca.s V_0
+IL_0050: call System.String RimTalk.Util.ContextHelper::<FormatNearbyContext>g__FmtGroup|10_0(RimTalk.Util.NearbyKind,System.String,RimTalk.Util.ContextHelper/<>c__DisplayClass10_0&)
+IL_0055: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_005a: nop
+IL_005b: dup
+IL_005c: ldc.i4.2
+IL_005d: ldstr "Plants"
+IL_0062: ldloca.s V_0
+IL_0064: call System.String RimTalk.Util.ContextHelper::<FormatNearbyContext>g__FmtGroup|10_0(RimTalk.Util.NearbyKind,System.String,RimTalk.Util.ContextHelper/<>c__DisplayClass10_0&)
+IL_0069: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_006e: nop
+IL_006f: dup
+IL_0070: ldc.i4.3
+IL_0071: ldstr "Animals"
+IL_0076: ldloca.s V_0
+IL_0078: call System.String RimTalk.Util.ContextHelper::<FormatNearbyContext>g__FmtGroup|10_0(RimTalk.Util.NearbyKind,System.String,RimTalk.Util.ContextHelper/<>c__DisplayClass10_0&)
+IL_007d: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_0082: nop
+IL_0083: dup
+IL_0084: ldc.i4.4
+IL_0085: ldstr "Filth"
+IL_008a: ldloca.s V_0
+IL_008c: call System.String RimTalk.Util.ContextHelper::<FormatNearbyContext>g__FmtGroup|10_0(RimTalk.Util.NearbyKind,System.String,RimTalk.Util.ContextHelper/<>c__DisplayClass10_0&)
+IL_0091: callvirt System.Void System.Collections.Generic.List`1<System.String>::Add(!0)
+IL_0096: nop
+IL_0097: ldsfld System.Func`2<System.String,System.Boolean> RimTalk.Util.ContextHelper/<>c::<>9__10_1
+IL_009c: dup
+IL_009d: brtrue.s IL_00b6
+IL_009f: pop
+IL_00a0: ldsfld RimTalk.Util.ContextHelper/<>c RimTalk.Util.ContextHelper/<>c::<>9
+IL_00a5: ldftn System.Boolean RimTalk.Util.ContextHelper/<>c::<FormatNearbyContext>b__10_1(System.String)
+IL_00ab: newobj System.Void System.Func`2<System.String,System.Boolean>::.ctor(System.Object,System.IntPtr)
+IL_00b0: dup
+IL_00b1: stsfld System.Func`2<System.String,System.Boolean> RimTalk.Util.ContextHelper/<>c::<>9__10_1
+IL_00b6: call System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Where<System.String>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,System.Boolean>)
+IL_00bb: stloc.1
+IL_00bc: ldstr "
+"
+IL_00c1: ldloc.1
+IL_00c2: call System.String System.String::Join(System.String,System.Collections.Generic.IEnumerable`1<System.String>)
+IL_00c7: stloc.3
+IL_00c8: br.s IL_00ca
+IL_00ca: ldloc.3
+IL_00cb: ret

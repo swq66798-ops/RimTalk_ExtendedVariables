@@ -1,0 +1,113 @@
+IL_0000: nop
+IL_0001: call RimTalk.RimTalkSettings RimTalk.Settings::Get()
+IL_0006: ldfld RimTalk.Data.ContextSettings RimTalk.RimTalkSettings::Context
+IL_000b: stloc.0
+IL_000c: ldloc.0
+IL_000d: ldfld System.Boolean RimTalk.Data.ContextSettings::IncludeHealth
+IL_0012: ldc.i4.0
+IL_0013: ceq
+IL_0015: stloc.3
+IL_0016: ldloc.3
+IL_0017: brfalse.s IL_0021
+IL_0019: ldnull
+IL_001a: stloc.s V_4
+IL_001c: br IL_013c
+IL_0021: ldsfld System.Reflection.MethodInfo RimTalk.Service.ContextBuilder::VisibleHediffsMethod
+IL_0026: ldnull
+IL_0027: ldc.i4.2
+IL_0028: newarr System.Object
+IL_002d: dup
+IL_002e: ldc.i4.0
+IL_002f: ldarg.0
+IL_0030: stelem.ref
+IL_0031: dup
+IL_0032: ldc.i4.1
+IL_0033: ldc.i4.0
+IL_0034: box System.Boolean
+IL_0039: stelem.ref
+IL_003a: callvirt System.Object System.Reflection.MethodBase::Invoke(System.Object,System.Object[])
+IL_003f: castclass System.Collections.Generic.IEnumerable`1<Verse.Hediff>
+IL_0044: stloc.1
+IL_0045: ldarg.1
+IL_0046: ldc.i4.0
+IL_0047: ceq
+IL_0049: stloc.s V_5
+IL_004b: ldloc.s V_5
+IL_004d: brfalse.s IL_00c5
+IL_004f: nop
+IL_0050: ldloc.1
+IL_0051: ldsfld System.Func`2<Verse.Hediff,System.Int32> RimTalk.Service.ContextBuilder/<>c::<>9__8_0
+IL_0056: dup
+IL_0057: brtrue.s IL_0070
+IL_0059: pop
+IL_005a: ldsfld RimTalk.Service.ContextBuilder/<>c RimTalk.Service.ContextBuilder/<>c::<>9
+IL_005f: ldftn System.Int32 RimTalk.Service.ContextBuilder/<>c::<GetHealthContext>b__8_0(Verse.Hediff)
+IL_0065: newobj System.Void System.Func`2<Verse.Hediff,System.Int32>::.ctor(System.Object,System.IntPtr)
+IL_006a: dup
+IL_006b: stsfld System.Func`2<Verse.Hediff,System.Int32> RimTalk.Service.ContextBuilder/<>c::<>9__8_0
+IL_0070: call System.Linq.IOrderedEnumerable`1<!!0> System.Linq.Enumerable::OrderByDescending<Verse.Hediff,System.Int32>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_0075: ldsfld System.Func`2<Verse.Hediff,System.Single> RimTalk.Service.ContextBuilder/<>c::<>9__8_1
+IL_007a: dup
+IL_007b: brtrue.s IL_0094
+IL_007d: pop
+IL_007e: ldsfld RimTalk.Service.ContextBuilder/<>c RimTalk.Service.ContextBuilder/<>c::<>9
+IL_0083: ldftn System.Single RimTalk.Service.ContextBuilder/<>c::<GetHealthContext>b__8_1(Verse.Hediff)
+IL_0089: newobj System.Void System.Func`2<Verse.Hediff,System.Single>::.ctor(System.Object,System.IntPtr)
+IL_008e: dup
+IL_008f: stsfld System.Func`2<Verse.Hediff,System.Single> RimTalk.Service.ContextBuilder/<>c::<>9__8_1
+IL_0094: call System.Linq.IOrderedEnumerable`1<!!0> System.Linq.Enumerable::ThenByDescending<Verse.Hediff,System.Single>(System.Linq.IOrderedEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_0099: ldsfld System.Func`2<Verse.Hediff,System.Int32> RimTalk.Service.ContextBuilder/<>c::<>9__8_2
+IL_009e: dup
+IL_009f: brtrue.s IL_00b8
+IL_00a1: pop
+IL_00a2: ldsfld RimTalk.Service.ContextBuilder/<>c RimTalk.Service.ContextBuilder/<>c::<>9
+IL_00a7: ldftn System.Int32 RimTalk.Service.ContextBuilder/<>c::<GetHealthContext>b__8_2(Verse.Hediff)
+IL_00ad: newobj System.Void System.Func`2<Verse.Hediff,System.Int32>::.ctor(System.Object,System.IntPtr)
+IL_00b2: dup
+IL_00b3: stsfld System.Func`2<Verse.Hediff,System.Int32> RimTalk.Service.ContextBuilder/<>c::<>9__8_2
+IL_00b8: call System.Linq.IOrderedEnumerable`1<!!0> System.Linq.Enumerable::ThenByDescending<Verse.Hediff,System.Int32>(System.Linq.IOrderedEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_00bd: ldc.i4.3
+IL_00be: call System.Collections.Generic.IEnumerable`1<!!0> System.Linq.Enumerable::Take<Verse.Hediff>(System.Collections.Generic.IEnumerable`1<!!0>,System.Int32)
+IL_00c3: stloc.1
+IL_00c4: nop
+IL_00c5: ldstr ","
+IL_00ca: ldloc.1
+IL_00cb: ldsfld System.Func`2<Verse.Hediff,Verse.HediffDef> RimTalk.Service.ContextBuilder/<>c::<>9__8_3
+IL_00d0: dup
+IL_00d1: brtrue.s IL_00ea
+IL_00d3: pop
+IL_00d4: ldsfld RimTalk.Service.ContextBuilder/<>c RimTalk.Service.ContextBuilder/<>c::<>9
+IL_00d9: ldftn Verse.HediffDef RimTalk.Service.ContextBuilder/<>c::<GetHealthContext>b__8_3(Verse.Hediff)
+IL_00df: newobj System.Void System.Func`2<Verse.Hediff,Verse.HediffDef>::.ctor(System.Object,System.IntPtr)
+IL_00e4: dup
+IL_00e5: stsfld System.Func`2<Verse.Hediff,Verse.HediffDef> RimTalk.Service.ContextBuilder/<>c::<>9__8_3
+IL_00ea: call System.Collections.Generic.IEnumerable`1<System.Linq.IGrouping`2<!!1,!!0>> System.Linq.Enumerable::GroupBy<Verse.Hediff,Verse.HediffDef>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_00ef: ldsfld System.Func`2<System.Linq.IGrouping`2<Verse.HediffDef,Verse.Hediff>,System.String> RimTalk.Service.ContextBuilder/<>c::<>9__8_4
+IL_00f4: dup
+IL_00f5: brtrue.s IL_010e
+IL_00f7: pop
+IL_00f8: ldsfld RimTalk.Service.ContextBuilder/<>c RimTalk.Service.ContextBuilder/<>c::<>9
+IL_00fd: ldftn System.String RimTalk.Service.ContextBuilder/<>c::<GetHealthContext>b__8_4(System.Linq.IGrouping`2<Verse.HediffDef,Verse.Hediff>)
+IL_0103: newobj System.Void System.Func`2<System.Linq.IGrouping`2<Verse.HediffDef,Verse.Hediff>,System.String>::.ctor(System.Object,System.IntPtr)
+IL_0108: dup
+IL_0109: stsfld System.Func`2<System.Linq.IGrouping`2<Verse.HediffDef,Verse.Hediff>,System.String> RimTalk.Service.ContextBuilder/<>c::<>9__8_4
+IL_010e: call System.Collections.Generic.IEnumerable`1<!!1> System.Linq.Enumerable::Select<System.Linq.IGrouping`2<Verse.HediffDef,Verse.Hediff>,System.String>(System.Collections.Generic.IEnumerable`1<!!0>,System.Func`2<!!0,!!1>)
+IL_0113: call System.String System.String::Join(System.String,System.Collections.Generic.IEnumerable`1<System.String>)
+IL_0118: stloc.2
+IL_0119: ldloc.2
+IL_011a: call System.Boolean System.String::IsNullOrEmpty(System.String)
+IL_011f: ldc.i4.0
+IL_0120: ceq
+IL_0122: stloc.s V_6
+IL_0124: ldloc.s V_6
+IL_0126: brfalse.s IL_0137
+IL_0128: ldstr "Health: "
+IL_012d: ldloc.2
+IL_012e: call System.String System.String::Concat(System.String,System.String)
+IL_0133: stloc.s V_4
+IL_0135: br.s IL_013c
+IL_0137: ldnull
+IL_0138: stloc.s V_4
+IL_013a: br.s IL_013c
+IL_013c: ldloc.s V_4
+IL_013e: ret
