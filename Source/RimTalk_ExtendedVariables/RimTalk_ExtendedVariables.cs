@@ -132,10 +132,7 @@ namespace RimTalk_ExtendedVariables
                 return "";
 
             int radius = 12;
-            var room = pawn.GetRoom();
-            bool useRoom = room != null && !room.PsychologicallyOutdoors;
-
-            var cells = GenRadial.RadialCellsAround(pawn.Position, radius, useRoom).ToList();
+            var cells = GenRadial.RadialCellsAround(pawn.Position, radius, true).ToList();
             
             Dictionary<string, int> buildings = new Dictionary<string, int>();
             Dictionary<string, int> items = new Dictionary<string, int>();
@@ -149,6 +146,8 @@ namespace RimTalk_ExtendedVariables
 
             foreach (var cell in cells)
             {
+                if (!GenSight.LineOfSight(pawn.Position, cell, pawn.Map, true)) continue;
+
                 var thingList = cell.GetThingList(pawn.Map);
                 foreach (var thing in thingList)
                 {
@@ -183,6 +182,9 @@ namespace RimTalk_ExtendedVariables
                     if (thing.def.category == ThingCategory.Building)
                     {
                         if (thing.def.defName == "Wall" || thing.def.defName.Contains("Wall")) continue;
+                        if (thing.def.altitudeLayer == AltitudeLayer.Conduits) continue;
+                        if (thing.def.defName.ToLower().Contains("conduit") || thing.def.defName.ToLower().Contains("pipe") || thing.def.defName.ToLower().Contains("wire")) continue;
+                        
                         AddCount(buildings, thing.def.LabelCap, 1);
                     }
                     else if (thing.def.category == ThingCategory.Item)
