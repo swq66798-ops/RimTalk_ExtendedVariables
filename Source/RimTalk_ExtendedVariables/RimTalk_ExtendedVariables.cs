@@ -53,6 +53,15 @@ namespace RimTalk_ExtendedVariables
                     0
                 );
                 Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_social_relations' variable.");
+
+                RimTalkPromptAPI.RegisterPawnVariable(
+                    "cj.rimtalk.extendedvariables",
+                    "extended_pain_level",
+                    GetPawnPainLevel,
+                    "Current pain level of the pawn.",
+                    0
+                );
+                Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_pain_level' variable.");
             }
             catch (Exception ex)
             {
@@ -256,6 +265,14 @@ namespace RimTalk_ExtendedVariables
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        private static string GetPawnPainLevel(Pawn pawn)
+        {
+            if (pawn == null || pawn.health == null || pawn.health.hediffSet == null)
+                return "";
+
+            return pawn.health.hediffSet.PainTotal.ToStringPercent();
         }
 
         private static string GetExtendedSocialRelations(Pawn pawn)
