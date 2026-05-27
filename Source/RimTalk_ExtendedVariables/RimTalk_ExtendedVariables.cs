@@ -44,6 +44,15 @@ namespace RimTalk_ExtendedVariables
                     0
                 );
                 Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_captive_status' variable.");
+
+                RimTalkPromptAPI.RegisterPawnVariable(
+                    "cj.rimtalk.extendedvariables",
+                    "extended_social_relations",
+                    GetExtendedSocialRelations,
+                    "Detailed social relations including opinion and custom relation labels.",
+                    0
+                );
+                Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_social_relations' variable.");
             }
             catch (Exception ex)
             {
@@ -248,6 +257,63 @@ namespace RimTalk_ExtendedVariables
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        private static string GetExtendedSocialRelations(Pawn pawn)
+        {
+            if (pawn == null || pawn.relations == null || pawn.Map == null)
+                return "";
+
+            StringBuilder sb = new StringBuilder();
+            bool hasRelations = false;
+
+            foreach (Pawn other in pawn.Map.mapPawns.AllPawns)
+            {
+                if (other == pawn || !other.RaceProps.Humanlike || other.Dead) continue;
+
+                bool shouldShow = false;
+                if (pawn.Faction != null && other.Faction == pawn.Faction)
+                {
+                    shouldShow = true;
+                }
+                else if (pawn.Faction != null && other.IsPrisoner && other.HostFaction == pawn.Faction)
+                {
+                    shouldShow = true;
+                }
+                else if (pawn.relations.DirectRelations.Any(r => r.otherPawn == other))
+                {
+                    shouldShow = true;
+                }
+
+                if (!shouldShow) continue;
+
+                int opinion = pawn.relations.OpinionOf(other);
+                bool isKin = pawn.relations.FamilyByBlood.Contains(other);
+
+                string relationLabel = "";
+                if (!isKin)
+                {
+                    if (opinion > 20) relationLabel = "朋友";
+                    else if (opinion < -20) relationLabel = "仇人";
+                    else relationLabel = "相识";
+                }
+                else
+                {
+                    if (opinion > 20) relationLabel = "喜爱";
+                    else if (opinion < -20) relationLabel = "厌恶";
+                    else relationLabel = "平淡";
+                }
+
+                sb.AppendLine($"- {other.Name?.ToStringShort ?? other.LabelShort}: {relationLabel} ({opinion})");
+                hasRelations = true;
+            }
+
+            if (hasRelations)
+            {
+                return "Social Relations:\n" + sb.ToString().TrimEnd();
+            }
+
+            return "";
         }
     }
 }

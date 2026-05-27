@@ -8,3 +8,4 @@ D:\dev\RimTalk_ExtendedVariables\1.5\Assemblies\RimTalk_ExtendedVariables.dll
 D:\dev\RimTalk_ExtendedVariables\1.5\Assemblies\RimTalk_ExtendedVariables.pdb
 D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.dll
 D:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.pdb
+d:\dev\RimTalk_ExtendedVariables\Source\RimTalk_ExtendedVariables\obj\Release\RimTalk_ExtendedVariables.sourcelink.json
