@@ -283,28 +283,38 @@ namespace RimTalk_ExtendedVariables
             StringBuilder sb = new StringBuilder();
             bool hasRelations = false;
 
+            // Get pawns currently in conversation
+            HashSet<Pawn> conversationPawns = new HashSet<Pawn>();
+            try
+            {
+                var context = RimTalk.Prompt.PromptManager.LastContext;
+                if (context != null && context.Pawns != null)
+                {
+                    foreach (var p in context.Pawns)
+                    {
+                        if (p != pawn && p is Pawn pawnObj)
+                        {
+                            conversationPawns.Add(pawnObj);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[RimTalk Extended Variables] Failed to get active conversations: " + ex.Message);
+            }
+
             foreach (Pawn other in pawn.Map.mapPawns.AllPawns)
             {
                 if (other == pawn || !other.RaceProps.Humanlike || other.Dead) continue;
 
-                bool shouldShow = false;
-                if (pawn.Faction != null && other.Faction == pawn.Faction)
-                {
-                    shouldShow = true;
-                }
-                else if (pawn.Faction != null && other.IsPrisoner && other.HostFaction == pawn.Faction)
-                {
-                    shouldShow = true;
-                }
-                else if (pawn.relations.DirectRelations.Any(r => r.otherPawn == other))
-                {
-                    shouldShow = true;
-                }
+                bool isKin = pawn.relations.FamilyByBlood.Contains(other);
+                bool inConversation = conversationPawns.Contains(other);
 
-                if (!shouldShow) continue;
+                // Only show if they are kin or in the same conversation
+                if (!isKin && !inConversation) continue;
 
                 int opinion = pawn.relations.OpinionOf(other);
-                bool isKin = pawn.relations.FamilyByBlood.Contains(other);
 
                 string relationLabel = "";
                 if (!isKin)
