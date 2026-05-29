@@ -12,9 +12,12 @@ namespace RimTalk_ExtendedVariables
     [StaticConstructorOnStartup]
     public static class RimTalk_ExtendedVariables_Mod
     {
+        private static System.Reflection.MethodInfo visibleHediffsMethod;
+
         static RimTalk_ExtendedVariables_Mod()
         {
             Log.Message("[RimTalk Extended Variables] Initializing...");
+            visibleHediffsMethod = AccessTools.Method(typeof(HealthCardUtility), "VisibleHediffs");
             
             try
             {
@@ -77,13 +80,17 @@ namespace RimTalk_ExtendedVariables
             StringBuilder sb = new StringBuilder();
             
             // Use RimWorld's VisibleHediffs to properly hide replaced parts
-            IEnumerable<Hediff> hediffs;
-            try
+            IEnumerable<Hediff> hediffs = null;
+            if (visibleHediffsMethod != null)
             {
-                var method = AccessTools.Method(typeof(HealthCardUtility), "VisibleHediffs");
-                hediffs = (IEnumerable<Hediff>)method.Invoke(null, new object[] { pawn, false });
+                try
+                {
+                    hediffs = (IEnumerable<Hediff>)visibleHediffsMethod.Invoke(null, new object[] { pawn, false });
+                }
+                catch { }
             }
-            catch
+            
+            if (hediffs == null)
             {
                 hediffs = pawn.health.hediffSet.hediffs.Where(h => h.Visible);
             }
