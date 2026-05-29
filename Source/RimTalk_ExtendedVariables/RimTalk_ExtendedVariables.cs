@@ -105,6 +105,14 @@ namespace RimTalk_ExtendedVariables
                         cause = $"，{injuryCause}";
                     }
                 }
+                else if (hediff is Hediff_MissingPart missingPart)
+                {
+                    string missingCause = GetMissingPartCause(missingPart);
+                    if (!string.IsNullOrEmpty(missingCause))
+                    {
+                        cause = $"，{missingCause}";
+                    }
+                }
                 
                 sb.AppendLine($"- {hediff.Label}{part}, {severity}{pain}{cause}");
             }
@@ -120,6 +128,16 @@ namespace RimTalk_ExtendedVariables
         private static string GetInjuryCause(Hediff_Injury injury)
         {
             LogEntry logEntry = injury.combatLogEntry?.Target;
+            if (logEntry != null)
+            {
+                return logEntry.ToGameStringFromPOV(null);
+            }
+            return null;
+        }
+
+        private static string GetMissingPartCause(Hediff_MissingPart missingPart)
+        {
+            LogEntry logEntry = missingPart.combatLogEntry?.Target;
             if (logEntry != null)
             {
                 return logEntry.ToGameStringFromPOV(null);
