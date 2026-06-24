@@ -1,5 +1,6 @@
 using HarmonyLib;
 using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -35,51 +36,96 @@ namespace RimTalk_ExtendedVariables.Patches
 
         private static void InitiateTalk(Pawn pawn)
         {
-            // Try to find RimTalk's talk generation method
-            var rimTalkType = AccessTools.TypeByName("RimTalk.RimTalk");
-            if (rimTalkType != null)
+            try
             {
-                // Look for a method that generates talk
-                var generateTalkMethod = AccessTools.Method(rimTalkType, "GenerateTalk", new[] { typeof(Pawn) });
-                if (generateTalkMethod != null)
+                // Find TalkService
+                var talkServiceType = AccessTools.TypeByName("RimTalk.Service.TalkService");
+                if (talkServiceType != null)
                 {
-                    generateTalkMethod.Invoke(null, new object[] { pawn });
-                    Messages.Message($"{pawn.NameShortColored} is initiating a conversation.", pawn, MessageTypeDefOf.NeutralEvent);
-                    return;
-                }
-                
-                // Alternative method name check
-                var tryGenerateTalkMethod = AccessTools.Method(rimTalkType, "TryGenerateTalkFromPool", new[] { typeof(Pawn) });
-                if (tryGenerateTalkMethod != null)
-                {
-                    tryGenerateTalkMethod.Invoke(null, new object[] { pawn });
-                    Messages.Message($"{pawn.NameShortColored} is initiating a conversation.", pawn, MessageTypeDefOf.NeutralEvent);
-                    return;
-                }
-            }
-
-            // If we can't find the direct method, we might need to use the TalkService or similar
-            var talkServiceType = AccessTools.TypeByName("RimTalk.Service.TalkService");
-            if (talkServiceType != null)
-            {
-                var instanceProp = AccessTools.Property(talkServiceType, "Instance");
-                if (instanceProp != null)
-                {
-                    var instance = instanceProp.GetValue(null);
-                    if (instance != null)
+                    var instanceProp = AccessTools.Property(talkServiceType, "Instance");
+                    if (instanceProp != null)
                     {
-                        var generateMethod = AccessTools.Method(talkServiceType, "GenerateAndProcessTalkAsync", new[] { typeof(Pawn) });
-                        if (generateMethod != null)
+                        var instance = instanceProp.GetValue(null);
+                        if (instance != null)
                         {
-                            generateMethod.Invoke(instance, new object[] { pawn });
-                            Messages.Message($"{pawn.NameShortColored} is initiating a conversation.", pawn, MessageTypeDefOf.NeutralEvent);
-                            return;
+                            // Find TalkRequest type
+                            var talkRequestType = AccessTools.TypeByName("RimTalk.Data.TalkRequest");
+                            if (talkRequestType != null)
+                            {
+                                // Find TalkType enum
+                                var talkTypeEnum = AccessTools.TypeByName("RimTalk.Source.Data.TalkType");
+                                if (talkTypeEnum != null)
+                                {
+                                    // Create TalkRequest instance
+                                    // Constructor: .ctor (String, Pawn, Pawn, TalkType)
+                                    // We use "User" TalkType (value 8)
+                                    object talkTypeValue = Enum.ToObject(talkTypeEnum, 8); // User
+                                    
+                                    // Find a recipient using RimTalk's PawnSelector
+                                    Pawn recipient = null;
+                                    var pawnSelectorType = AccessTools.TypeByName("RimTalk.Service.PawnSelector");
+                                    if (pawnSelectorType != null)
+                                    {
+                                        var getNearbyMethod = AccessTools.Method(pawnSelectorType, "GetNearByTalkablePawns");
+                                        if (getNearbyMethod != null)
+                                        {
+                                            // DetectionType enum is likely in RimTalk.Util.NearbyKind or similar, but we can pass null for the second pawn and 0 for DetectionType (usually Default/Any)
+                                            // Let's try to find the DetectionType enum
+                                            var detectionTypeEnum = AccessTools.TypeByName("RimTalk.Util.NearbyKind");
+                                            object detectionTypeValue = detectionTypeEnum != null ? Enum.ToObject(detectionTypeEnum, 0) : 0;
+                                            
+                                            var nearbyPawns = getNearbyMethod.Invoke(null, new object[] { pawn, null, detectionTypeValue }) as IEnumerable<Pawn>;
+                                            if (nearbyPawns != null && nearbyPawns.Any())
+                                            {
+                                                recipient = nearbyPawns.RandomElement();
+                                            }
+                                        }
+                                    }
+                                    
+                                    // Fallback if PawnSelector fails or isn't found
+                                    if (recipient == null && pawn.Map != null)
+                                    {
+                                        // Simple distance check (e.g., within 10 cells and in the same room)
+                                        Room pawnRoom = pawn.GetRoom();
+                                        recipient = pawn.Map.mapPawns.AllPawnsSpawned
+                                            .Where(p => p != pawn && p.RaceProps.Humanlike && !p.Dead && !p.Downed && 
+                                                        p.Position.DistanceTo(pawn.Position) <= 10f && 
+                                                        p.GetRoom() == pawnRoom &&
+                                                        GenSight.LineOfSight(pawn.Position, p.Position, pawn.Map))
+                                            .RandomElementWithFallback();
+                                    }
+                                    
+                                    if (recipient == null)
+                                    {
+                                        Messages.Message($"Failed to initiate conversation for {pawn.NameShortColored}. No valid recipient found.", pawn, MessageTypeDefOf.RejectInput);
+                                        return;
+                                    }
+
+                                    object talkRequest = Activator.CreateInstance(talkRequestType, new object[] { "User initiated talk", pawn, recipient, talkTypeValue });
+                                    
+                                    if (talkRequest != null)
+                                    {
+                                        var generateMethod = AccessTools.Method(talkServiceType, "GenerateAndProcessTalkAsync", new[] { talkRequestType });
+                                        if (generateMethod != null)
+                                        {
+                                            generateMethod.Invoke(instance, new object[] { talkRequest });
+                                            Messages.Message($"{pawn.NameShortColored} is initiating a conversation with {recipient.NameShortColored}.", pawn, MessageTypeDefOf.NeutralEvent);
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+                
+                Messages.Message($"Failed to initiate conversation for {pawn.NameShortColored}. RimTalk method not found.", pawn, MessageTypeDefOf.RejectInput);
             }
-
-            Messages.Message($"Failed to initiate conversation for {pawn.NameShortColored}. RimTalk method not found.", pawn, MessageTypeDefOf.RejectInput);
+            catch (System.Exception ex)
+            {
+                Log.Error($"[RimTalk Extended Variables] Error initiating talk: {ex}");
+                Messages.Message($"Error initiating conversation for {pawn.NameShortColored}. See log for details.", pawn, MessageTypeDefOf.RejectInput);
+            }
         }
     }
 }
