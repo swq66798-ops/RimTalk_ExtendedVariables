@@ -6,6 +6,7 @@ using RimWorld;
 using Verse;
 using HarmonyLib;
 using RimTalk.API;
+using RimTalk_ExtendedVariables.Patches;
 
 namespace RimTalk_ExtendedVariables
 {
@@ -17,6 +18,10 @@ namespace RimTalk_ExtendedVariables
         static RimTalk_ExtendedVariables_Mod()
         {
             Log.Message("[RimTalk Extended Variables] Initializing...");
+            
+            var harmony = new Harmony("cj.rimtalk.extendedvariables");
+            harmony.PatchAll();
+            
             visibleHediffsMethod = AccessTools.Method(typeof(HealthCardUtility), "VisibleHediffs");
             
             try
