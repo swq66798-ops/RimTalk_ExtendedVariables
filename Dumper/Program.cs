@@ -9,39 +9,27 @@ class Program
     {
         try
         {
-            string dllPath = args.Length > 0 ? args[0] : @"d:\dev\RimTalk_ExtendedVariables\RimTalk.dll";
-            string typeName = args.Length > 1 ? args[1] : "RimTalk.Service.TalkService";
-            
+            string dllPath = args[0];
+            string typeName = args[1];
             var module = ModuleDefinition.ReadModule(dllPath);
-            if (typeName == "ALL_TYPES")
+            var type = module.Types.FirstOrDefault(t => t.FullName == typeName);
+            if (type != null)
             {
-                foreach (var t in module.Types)
+                var method = type.Methods.FirstOrDefault(m => m.Name == "Render");
+                if (method != null && method.HasBody)
                 {
-                    Console.WriteLine(t.FullName);
-                }
-            }
-            else
-            {
-                var type = module.Types.FirstOrDefault(t => t.FullName == typeName);
-                if (type != null)
-                {
-                    Console.WriteLine($"Methods in {typeName}:");
-                    foreach (var method in type.Methods)
+                    Console.WriteLine($"Instructions in {method.Name}:");
+                    foreach (var inst in method.Body.Instructions)
                     {
-                        Console.WriteLine($"- {method.Name} ({string.Join(", ", method.Parameters.Select(p => p.ParameterType.Name))})");
-                    }
-                    if (type.IsEnum)
-                    {
-                        Console.WriteLine($"\nEnum values in {typeName}:");
-                        foreach (var field in type.Fields.Where(f => f.IsStatic))
+                        if (inst.OpCode == OpCodes.Call || inst.OpCode == OpCodes.Callvirt)
                         {
-                            Console.WriteLine($"- {field.Name} = {field.Constant}");
+                            var methodRef = inst.Operand as MethodReference;
+                            if (methodRef != null && methodRef.DeclaringType.FullName == "Scriban.Template" && methodRef.Name == "Render")
+                            {
+                                Console.WriteLine($"Render call: {inst.Previous.Previous.Previous.Previous.Operand} -> {inst.Previous.Previous.Previous.Operand}");
+                            }
                         }
                     }
-                }
-                else
-                {
-                    Console.WriteLine($"Type {typeName} not found.");
                 }
             }
         }

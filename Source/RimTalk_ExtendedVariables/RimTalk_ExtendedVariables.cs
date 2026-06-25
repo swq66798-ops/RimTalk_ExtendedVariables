@@ -70,6 +70,11 @@ namespace RimTalk_ExtendedVariables
                     0
                 );
                 Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_pain_level' variable.");
+
+                // Register a custom function to Scriban context instead of a pawn variable
+                // Since RimTalkPromptAPI.RegisterPawnVariable only accepts Func<Pawn, string>
+                // We will use Harmony to patch the Scriban context creation
+                Log.Message("[RimTalk Extended Variables] Will register 'count_by_def' via Harmony patch.");
             }
             catch (Exception ex)
             {
@@ -370,6 +375,19 @@ namespace RimTalk_ExtendedVariables
             }
 
             return "";
+        }
+
+        public static int GetCountByDef(string defName)
+        {
+            if (string.IsNullOrEmpty(defName)) return 0;
+            
+            Map map = Find.CurrentMap;
+            if (map == null) return 0;
+
+            ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
+            if (def == null) return 0;
+
+            return map.listerThings.ThingsOfDef(def).Count;
         }
     }
 }
