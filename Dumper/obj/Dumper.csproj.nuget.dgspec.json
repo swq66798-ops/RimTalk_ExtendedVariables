@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj": {}
+    "d:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj": {}
   },
   "projects": {
-    "D:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj": {
+    "d:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj",
+        "projectUniqueName": "d:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj",
         "projectName": "Dumper",
-        "projectPath": "D:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj",
+        "projectPath": "d:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj",
         "packagesPath": "C:\\Users\\swq66\\.nuget\\packages\\",
-        "outputPath": "D:\\dev\\RimTalk_ExtendedVariables\\Dumper\\obj\\",
+        "outputPath": "d:\\dev\\RimTalk_ExtendedVariables\\Dumper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\swq66\\AppData\\Roaming\\NuGet\\NuGet.Config"
