@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NZBjn80wAzM=",
+  "dgSpecHash": "Vfc3S/gc0fk=",
   "success": true,
-  "projectFilePath": "d:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj",
+  "projectFilePath": "D:\\dev\\RimTalk_ExtendedVariables\\Dumper\\Dumper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\swq66\\.nuget\\packages\\icsharpcode.decompiler\\10.1.0.8386\\icsharpcode.decompiler.10.1.0.8386.nupkg.sha512",
     "C:\\Users\\swq66\\.nuget\\packages\\mono.cecil\\0.11.6\\mono.cecil.0.11.6.nupkg.sha512",
