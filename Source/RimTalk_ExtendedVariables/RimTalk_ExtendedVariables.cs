@@ -114,20 +114,12 @@ namespace RimTalk_ExtendedVariables
                 string pain = hediff.PainOffset > 0 ? $", Pain:{hediff.PainOffset.ToStringPercent()}" : "";
                 
                 string cause = "";
-                if (hediff is Hediff_Injury injury)
+                if (HealthCardUtility.GetCombatLogInfo(new[] { hediff }, out TaggedString combatLogText, out LogEntry combatLogEntry))
                 {
-                    string injuryCause = GetInjuryCause(injury);
-                    if (!string.IsNullOrEmpty(injuryCause))
+                    string text = combatLogText.Resolve();
+                    if (!string.IsNullOrEmpty(text))
                     {
-                        cause = $"，{injuryCause}";
-                    }
-                }
-                else if (hediff is Hediff_MissingPart missingPart)
-                {
-                    string missingCause = GetMissingPartCause(missingPart);
-                    if (!string.IsNullOrEmpty(missingCause))
-                    {
-                        cause = $"，{missingCause}";
+                        cause = $"，{text}";
                     }
                 }
                 
@@ -140,26 +132,6 @@ namespace RimTalk_ExtendedVariables
             }
             
             return "";
-        }
-
-        private static string GetInjuryCause(Hediff_Injury injury)
-        {
-            LogEntry logEntry = injury.combatLogEntry?.Target;
-            if (logEntry != null)
-            {
-                return logEntry.ToGameStringFromPOV(null);
-            }
-            return null;
-        }
-
-        private static string GetMissingPartCause(Hediff_MissingPart missingPart)
-        {
-            LogEntry logEntry = missingPart.combatLogEntry?.Target;
-            if (logEntry != null)
-            {
-                return logEntry.ToGameStringFromPOV(null);
-            }
-            return null;
         }
 
         private static string GetPawnSurroundings(Pawn pawn)
