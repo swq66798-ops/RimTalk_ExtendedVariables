@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k0O55ftc8X0=",
+  "dgSpecHash": "cxed7tmCcmw=",
   "success": true,
-  "projectFilePath": "d:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\RimTalk_ExtendedVariables.csproj",
+  "projectFilePath": "D:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\RimTalk_ExtendedVariables.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\swq66\\.nuget\\packages\\krafs.rimworld.ref\\1.5.4104\\krafs.rimworld.ref.1.5.4104.nupkg.sha512",
     "C:\\Users\\swq66\\.nuget\\packages\\lib.harmony\\2.3.3\\lib.harmony.2.3.3.nupkg.sha512",

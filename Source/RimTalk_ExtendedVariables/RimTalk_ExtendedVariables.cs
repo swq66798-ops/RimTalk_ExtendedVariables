@@ -106,8 +106,25 @@ namespace RimTalk_ExtendedVariables
             }
             
             bool hasHediffs = false;
+            Dictionary<BodyPartRecord, int> partWoundCounts = new Dictionary<BodyPartRecord, int>();
+
             foreach (var hediff in hediffs)
             {
+                if (hediff.Part != null)
+                {
+                    if (!partWoundCounts.ContainsKey(hediff.Part))
+                    {
+                        partWoundCounts[hediff.Part] = 0;
+                    }
+                    
+                    if (partWoundCounts[hediff.Part] >= 2)
+                    {
+                        continue; // Skip if we already have 2 wounds for this part
+                    }
+                    
+                    partWoundCounts[hediff.Part]++;
+                }
+
                 hasHediffs = true;
                 string part = hediff.Part != null ? $"({hediff.Part.Label})" : "";
                 string severity = $"Severity:{(int)(hediff.Severity * 100)}%";
