@@ -71,6 +71,15 @@ namespace RimTalk_ExtendedVariables
                 );
                 Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_pain_level' variable.");
 
+                RimTalkPromptAPI.RegisterPawnVariable(
+                    "cj.rimtalk.extendedvariables",
+                    "extended_faction_relations",
+                    GetExtendedFactionRelations,
+                    "Detailed faction relations with other pawns in the conversation.",
+                    0
+                );
+                Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_faction_relations' variable.");
+
                 // Register a custom function to Scriban context instead of a pawn variable
                 // Since RimTalkPromptAPI.RegisterPawnVariable only accepts Func<Pawn, string>
                 // We will use Harmony to patch the Scriban context creation
@@ -361,6 +370,67 @@ namespace RimTalk_ExtendedVariables
             if (hasRelations)
             {
                 return "Social Relations:\n" + sb.ToString().TrimEnd();
+            }
+
+            return "";
+        }
+
+        private static string GetExtendedFactionRelations(Pawn pawn)
+        {
+            if (pawn == null || pawn.Faction == null)
+                return "";
+
+            StringBuilder sb = new StringBuilder();
+            bool hasRelations = false;
+
+            // Get pawns currently in conversation
+            HashSet<Faction> conversationFactions = new HashSet<Faction>();
+            try
+            {
+                var context = RimTalk.Prompt.PromptManager.LastContext;
+                if (context != null && context.Pawns != null)
+                {
+                    foreach (var p in context.Pawns)
+                    {
+                        if (p != pawn && p is Pawn pawnObj && pawnObj.Faction != null && pawnObj.Faction != pawn.Faction)
+                        {
+                            conversationFactions.Add(pawnObj.Faction);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("[RimTalk Extended Variables] Failed to get active conversations for faction relations: " + ex.Message);
+            }
+
+            if (conversationFactions.Count == 0)
+                return "";
+
+            foreach (Faction otherFaction in conversationFactions)
+            {
+                FactionRelationKind relationKind = pawn.Faction.RelationKindWith(otherFaction);
+                string relationLabel = "";
+                switch (relationKind)
+                {
+                    case FactionRelationKind.Hostile:
+                        relationLabel = "敌对";
+                        break;
+                    case FactionRelationKind.Neutral:
+                        relationLabel = "中立";
+                        break;
+                    case FactionRelationKind.Ally:
+                        relationLabel = "结盟";
+                        break;
+                }
+
+                sb.AppendLine($"- 与{otherFaction.Name}{relationLabel}");
+                hasRelations = true;
+            }
+
+            if (hasRelations)
+            {
+                return "Faction Relations:\n" + sb.ToString().TrimEnd();
             }
 
             return "";
