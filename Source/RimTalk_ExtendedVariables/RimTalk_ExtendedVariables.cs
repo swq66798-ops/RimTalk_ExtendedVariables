@@ -7,6 +7,7 @@ using Verse;
 using HarmonyLib;
 using RimTalk.API;
 using RimTalk_ExtendedVariables.Patches;
+using Verse.AI.Group;
 
 namespace RimTalk_ExtendedVariables
 {
@@ -79,6 +80,15 @@ namespace RimTalk_ExtendedVariables
                     0
                 );
                 Log.Message("[RimTalk Extended Variables] Successfully registered 'extended_faction_relations' variable.");
+
+                RimTalkPromptAPI.RegisterPawnVariable(
+                    "cj.rimtalk.extendedvariables",
+                    "is_prison_breaking",
+                    GetIsPrisonBreaking,
+                    "Returns true if the prisoner is currently breaking out.",
+                    0
+                );
+                Log.Message("[RimTalk Extended Variables] Successfully registered 'is_prison_breaking' variable.");
 
                 // Register a custom function to Scriban context instead of a pawn variable
                 // Since RimTalkPromptAPI.RegisterPawnVariable only accepts Func<Pawn, string>
@@ -434,6 +444,20 @@ namespace RimTalk_ExtendedVariables
             }
 
             return "";
+        }
+
+        private static string GetIsPrisonBreaking(Pawn pawn)
+        {
+            if (pawn == null || !pawn.IsPrisoner)
+                return "false";
+
+            var lord = pawn.GetLord();
+            if (lord != null && lord.LordJob is LordJob_PrisonBreak)
+            {
+                return "true";
+            }
+
+            return "false";
         }
 
         public static int GetCountByDef(string defName)

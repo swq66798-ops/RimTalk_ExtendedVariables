@@ -601,11 +601,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\RimTalk_ExtendedVariables.csproj",
+      "projectUniqueName": "d:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\RimTalk_ExtendedVariables.csproj",
       "projectName": "RimTalk_ExtendedVariables",
-      "projectPath": "D:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\RimTalk_ExtendedVariables.csproj",
+      "projectPath": "d:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\RimTalk_ExtendedVariables.csproj",
       "packagesPath": "C:\\Users\\swq66\\.nuget\\packages\\",
-      "outputPath": "D:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\obj\\",
+      "outputPath": "d:\\dev\\RimTalk_ExtendedVariables\\Source\\RimTalk_ExtendedVariables\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\swq66\\AppData\\Roaming\\NuGet\\NuGet.Config"
